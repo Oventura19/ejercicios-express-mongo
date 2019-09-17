@@ -1,0 +1,26 @@
+{
+  "name": "proyectos-express",
+  "version": "1.0.0",
+  "description": "Proyectos Express",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-useragent": "^1.0.13",
+    "mongoose": "^5.7.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Oventura19/proyectos-express.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Oventura19/proyectos-express/issues"
+  },
+  "homepage": "https://github.com/Oventura19/proyectos-express#readme"
+}
