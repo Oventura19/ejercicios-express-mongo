@@ -28,7 +28,7 @@ app.get('/', function(req, res) {
                         i += "<td>" + element.name + "</td>";
                         i += "<td>" + element.count + "</td></tr>";
                     });
-                    i = "<table><tr><td>Id</td><td>Name</td><td>Visits</td></tr>" + i + "</table>";
+                    i = "<th><table><tr><td>Id</td><td>Name</td><td>Visits</td></tr>" + i + "<tr></table></th>";
                     res.send(i);
 
                 });
@@ -45,7 +45,7 @@ app.get('/', function(req, res) {
                         i += "<td>" + element.name + "</td>";
                         i += "<td>" + element.count + "</td></tr>";
                     });
-                    i = "<table><tr><td>Id</td><td>Name</td><td>Visits</td></tr>" + i + "</table>";
+                    i = "<th><table><tr><td>Id</td><td>Name</td><td>Visits</td></tr>" + i + "<tr></table></th>";
                     res.send(i);
 
                 });
