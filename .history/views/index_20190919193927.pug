@@ -1,0 +1,16 @@
+html
+  head
+    title Formulario de Registro
+  body
+    table
+      thead
+        tr
+          th Nombre
+          th Email
+          th Contraseña
+      tbody
+        each registros
+          tr
+            td= registros.name
+            td= visitor.email
+            td= visitor.password

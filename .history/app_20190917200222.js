@@ -1,12 +1,10 @@
 var express = require('express');
 var mongoose = require("mongoose");
 var bodyParser = require('body-parser');
-//app.set('view engine', 'pug');
-//app.set('views', 'views');
 
 var app = express();
 
-mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost:27017/register', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost:27017/registro', { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connection.on("error", function(e) { console.error(e); });
 
 var schema = mongoose.Schema({
@@ -17,52 +15,41 @@ var schema = mongoose.Schema({
 
 var Visitor = mongoose.model("Visitor", schema);
 
+//app.set('view engine', 'jade');
+
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', function(req, res) {
-    Visitor.find({}, function(err, visits) {
-        if (err) { return console.error(err) }
-        let i = ('<form action="/register" method="post"> <br><button type="submit">Registrarse</button></form><br><br>') +
-            "<table><thead><th>Name</th><th>Email</th></thead><tbody>";
-        visits.forEach(element => {
-            i += "<tr><td>" + element.name + "</td>";
-            i += "<td>" + element.email + "</td></tr>";
+
+app.get('/formulario', function(req, res) {
+    res.render('formulario');
+});
+
+app.post('/graba-usuario', function(req, res) {
+    let registro = {
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password
+    };
+
+    console.log(JSON.stringify(registro));
+
+    mongodb.connect(dbUrl, function(err, db) {
+        db.collection('usuarios').insert(registro);
+    });
+
+    res.render('graba-usuario');
+})
+
+app.get('/listado', function(req, res) {
+    mongodb.connect(dbUrl, function(err, db) {
+        db.collection('usuarios').find().toArray(function(err, docs) {
+            datos.usuarios = docs;
+            res.render('listado', datos);
         });
-        i += "</tbody></table>";
-        res.send(i);
     });
 });
-
-app.get('/register', function(req, res) {
-    //res.send('/register');
-    res.send('<form action="/register" method="post"> <br>Nombre<br><label for="name"> <input type="text" id="name" name="name"><br><br>Email<br> <input type="text" id="email" name="email"><br><br>Contraseña<br> <input type="password" id="password" ><br><br><button type="submit">Registrarse</button></form>');
-});
-
-app.use(express.urlencoded());
-app.post('/register', (req, res) => {
-    var first = new Visitor({ name: req.body.name, email: req.body.email, password: req.body.password });
-    first.save(function(err) {
-        if (err) { return console.error(err) };
-    });
-    res.redirect('/');
-    //var tagName = req.body.name;
-    //var tagEmail = req.body.email;
-    //res.send(tagName + "<br>" + tagEmail);
-
-
-});
-
-
-
-
 
 app.listen(3000, () => console.log('Listening on port 3000!'));
-
-
-
-
-
-
 
 
 

@@ -20,35 +20,22 @@ var Visitor = mongoose.model("Visitor", schema);
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', function(req, res) {
-    Visitor.find({}, function(err, visits) {
-        if (err) { return console.error(err) }
-        let i = ('<form action="/register" method="post"> <br><button type="submit">Registrarse</button></form><br><br>') +
-            "<table><thead><th>Name</th><th>Email</th></thead><tbody>";
-        visits.forEach(element => {
-            i += "<tr><td>" + element.name + "</td>";
-            i += "<td>" + element.email + "</td></tr>";
-        });
-        i += "</tbody></table>";
-        res.send(i);
-    });
+    res.send('tablayboton');
 });
 
 app.get('/register', function(req, res) {
     //res.send('/register');
-    res.send('<form action="/register" method="post"> <br>Nombre<br><label for="name"> <input type="text" id="name" name="name"><br><br>Email<br> <input type="text" id="email" name="email"><br><br>Contraseña<br> <input type="password" id="password" ><br><br><button type="submit">Registrarse</button></form>');
+    res.send('<form action="/register" method="post"> <br>Nombre<br><label for="name"> <input type="text" id="name" name="name"><br><br>Email<br> <input type="text" id="email" email="email"><br><br>Contraseña<br> <input type="password" id="password" ><br><br><button type="submit">Registrarse</button></form>');
 });
 
 app.use(express.urlencoded());
 app.post('/register', (req, res) => {
-    var first = new Visitor({ name: req.body.name, email: req.body.email, password: req.body.password });
-    first.save(function(err) {
-        if (err) { return console.error(err) };
-    });
-    res.redirect('/');
-    //var tagName = req.body.name;
-    //var tagEmail = req.body.email;
-    //res.send(tagName + "<br>" + tagEmail);
-
+    var tagName = req.body.name;
+    var tagEmail = req.body.email;
+    res.send(tagName + tagEmail);
+    //let i = "";
+    //i = "<table><thead><th>Name</th><th>Email</th></thead><tbody>" + i + "</tbody></table>";
+    //res.send(i);
 
 });
 

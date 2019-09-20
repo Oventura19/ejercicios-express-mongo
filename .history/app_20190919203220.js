@@ -20,17 +20,9 @@ var Visitor = mongoose.model("Visitor", schema);
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', function(req, res) {
-    Visitor.find({}, function(err, visits) {
-        if (err) { return console.error(err) }
-        let i = ('<form action="/register" method="post"> <br><button type="submit">Registrarse</button></form><br><br>') +
-            "<table><thead><th>Name</th><th>Email</th></thead><tbody>";
-        visits.forEach(element => {
-            i += "<tr><td>" + element.name + "</td>";
-            i += "<td>" + element.email + "</td></tr>";
-        });
-        i += "</tbody></table>";
-        res.send(i);
-    });
+    let i = "";
+    i = "<table><thead><th>Name</th><th>Email</th></thead><tbody>" + i + "</tbody></table>";
+    res.send(i);
 });
 
 app.get('/register', function(req, res) {

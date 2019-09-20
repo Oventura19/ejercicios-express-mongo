@@ -20,35 +20,24 @@ var Visitor = mongoose.model("Visitor", schema);
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', function(req, res) {
-    Visitor.find({}, function(err, visits) {
-        if (err) { return console.error(err) }
-        let i = ('<form action="/register" method="post"> <br><button type="submit">Registrarse</button></form><br><br>') +
-            "<table><thead><th>Name</th><th>Email</th></thead><tbody>";
-        visits.forEach(element => {
-            i += "<tr><td>" + element.name + "</td>";
-            i += "<td>" + element.email + "</td></tr>";
-        });
-        i += "</tbody></table>";
-        res.send(i);
-    });
+    res.send('tablayboton');
 });
 
 app.get('/register', function(req, res) {
-    //res.send('/register');
-    res.send('<form action="/register" method="post"> <br>Nombre<br><label for="name"> <input type="text" id="name" name="name"><br><br>Email<br> <input type="text" id="email" name="email"><br><br>Contraseña<br> <input type="password" id="password" ><br><br><button type="submit">Registrarse</button></form>');
+    //res.send('/regisgter');
+    res.send('<form action="/register" method="post"> <br>Nombre<br><label for="username"> <input type="text" id="name" name="name"><br><br>Email<br><label for="email"> <input type="text" id="email" email="email"><br><br>Contraseña<br><label for="password"> <input type="password" id="password" password="password"><br><br><button type="submit">Registrarse</button></form>');
 });
 
 app.use(express.urlencoded());
 app.post('/register', (req, res) => {
-    var first = new Visitor({ name: req.body.name, email: req.body.email, password: req.body.password });
-    first.save(function(err) {
-        if (err) { return console.error(err) };
+    let i = "";
+    res.forEach(element => {
+        i += "<tr><td>" + element.name + "</td>";
+        i += "<td>" + element.email + "</td>";
+        i += "<td>" + element.password + "</td></tr>";
     });
-    res.redirect('/');
-    //var tagName = req.body.name;
-    //var tagEmail = req.body.email;
-    //res.send(tagName + "<br>" + tagEmail);
-
+    i = "<table><thead><th>Id</th><th>Name</th><th>Visits</th></thead><tbody>" + i + "</tbody></table>";
+    res.send(i);
 
 });
 

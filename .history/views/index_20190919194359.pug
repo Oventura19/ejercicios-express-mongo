@@ -1,0 +1,16 @@
+html
+  head
+    title Formulario de Registro
+  body
+    form(action="/register")
+      thead
+        tr
+          th Nombre
+          th Email
+          th Contraseña
+      tbody
+        each registros
+          tr
+            td= registros.name
+            td= registros.email
+            td= registros.password
