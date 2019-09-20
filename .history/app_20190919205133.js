@@ -22,7 +22,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/', function(req, res) {
     Visitor.find({}, function(err, visits) {
         if (err) { return console.error(err) }
-        let i = '<a href="/register">Registrarse</a>' + "<table><thead><th>Name</th><th>Email</th></thead><tbody>";
+        let i = '<a href="/register">Registrarse</a>' +
+            "<table><thead><th>Name</th><th>Email</th></thead><tbody>";
         visits.forEach(element => {
             i += "<tr><td>" + element.name + "</td>";
             i += "<td>" + element.email + "</td></tr>";
