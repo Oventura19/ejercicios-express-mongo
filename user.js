@@ -1,14 +1,14 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt"); //Encryptar contraseñas
+const bcrypt = require("bcrypt");
 
-const { Schema } = mongoose;
-const UserSchema = new Schema ({
-  name: String,
-  email: String,
-  password: String
-})
+const schema = mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true },
+  password: { type: String, required: true }
+});
 
-UserSchema.pre("save", function (next) {
+// hashes the password
+schema.pre("save", function (next) {
   bcrypt.hash(this.password, 10, (err, hash) => {
     if (err) {
       return next(err);
@@ -18,12 +18,10 @@ UserSchema.pre("save", function (next) {
   });
 });
 
-//Metodos de instancia
-UserSchema.statics.authenticate = async (email, password) => {
-  // buscamos el usuario utilizando el email
+// used for authentication
+schema.statics.authenticate = async (email, password) => {
   const user = await mongoose.model("User").findOne({ email: email });
   if (user) {
-    // si existe comparamos la contraseña
     return new Promise((resolve, reject) => {
       bcrypt.compare(password, user.password, (err, result) => {
         if (err) reject(err);
@@ -32,7 +30,8 @@ UserSchema.statics.authenticate = async (email, password) => {
     });
     return user;
   }
+
   return null;
 };
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model("User", schema);

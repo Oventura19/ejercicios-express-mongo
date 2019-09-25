@@ -1,14 +1,16 @@
-extends layout.pug
+extends layout
 
 block content
-  a(href='http://localhost:3000/logout') Log out
-  table
+  if user
+    a(href="/logout") Salir
+
+  table(border="1")
     thead
       tr
         th Name
         th Email
     tbody
-      each val in users
+      each user in users
         tr
-          td= val.name
-          td= val.email
+          td= user.name
+          td= user.email
