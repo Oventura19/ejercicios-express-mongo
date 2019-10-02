@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  if user
+    a(href="/logout") Salir
+
+  table(border="1")
+    thead
+      tr
+        th Name
+        th Email
+    tbody
+      each user in users
+        tr
+          td= user.name
+          td= user.email
